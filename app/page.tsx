@@ -21,13 +21,15 @@ export default function Home() {
         body: JSON.stringify({ email }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(data.error || 'Failed to join waitlist');
       }
 
       setSubmitted(true);
       setEmail('');
+      alert(data.message);
     } catch (error) {
       console.error('Error joining waitlist:', error);
       alert(error instanceof Error ? error.message : 'Failed to join waitlist');

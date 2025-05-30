@@ -12,13 +12,29 @@ export async function POST(request: Request) {
       );
     }
 
-    const subscriber = await prisma.subscriber.create({
-      data: {
-        email: email,
-      },
+    // Check if email already exists
+    const existingSubscriber = await prisma.subscriber.findUnique({
+      where: { email }
     });
 
-    return NextResponse.json(subscriber);
+    if (existingSubscriber) {
+      return NextResponse.json(
+        { message: 'You are already on the waitlist!' },
+        { status: 200 }
+      );
+    }
+
+    // Insert new subscriber
+    const subscriber = await prisma.subscriber.create({
+      data: {
+        email
+      }
+    });
+
+    return NextResponse.json({ 
+      message: 'Successfully joined the waitlist!',
+      subscriber
+    });
   } catch (error) {
     console.error('Error in waitlist POST:', error);
     return NextResponse.json(
@@ -32,8 +48,8 @@ export async function GET() {
   try {
     const subscribers = await prisma.subscriber.findMany({
       orderBy: {
-        createdAt: 'desc',
-      },
+        createdAt: 'desc'
+      }
     });
     
     return NextResponse.json(subscribers);
