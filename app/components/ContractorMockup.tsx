@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PhotoIcon, PlusIcon, CheckCircleIcon, ArrowPathIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
+type TaskId = 'garden-grass' | 'garden-trees' | 'garden-pathway' | 'maintenance-heater' | 'maintenance-lights' | 'maintenance-paint';
+
 const ContractorMockup = () => {
+  const [checkedTasks, setCheckedTasks] = useState<Record<TaskId, boolean>>({
+    'garden-grass': true,
+    'garden-trees': true,
+    'garden-pathway': false,
+    'maintenance-heater': true,
+    'maintenance-lights': true,
+    'maintenance-paint': true
+  });
+
+  const handleCheckboxChange = (taskId: TaskId) => {
+    setCheckedTasks(prev => ({
+      ...prev,
+      [taskId]: !prev[taskId]
+    }));
+  };
+
   return (
     <div className="relative w-[280px] h-[580px] mx-auto">
       {/* Phone Frame */}
@@ -51,17 +69,32 @@ const ContractorMockup = () => {
                 {/* Tasks List */}
                 <div className="mt-3 space-y-2 pl-2">
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" className="h-4 w-4 text-primary rounded border-gray-300" checked />
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4 text-primary rounded border-gray-300" 
+                      checked={checkedTasks['garden-grass']}
+                      onChange={() => handleCheckboxChange('garden-grass')}
+                    />
                     <span className="text-sm text-gray-700 flex-1">Replace natural with artificial grass</span>
                     <span className="text-sm font-medium text-primary">$2,500</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" className="h-4 w-4 text-primary rounded border-gray-300" checked />
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4 text-primary rounded border-gray-300" 
+                      checked={checkedTasks['garden-trees']}
+                      onChange={() => handleCheckboxChange('garden-trees')}
+                    />
                     <span className="text-sm text-gray-700 flex-1">Trim 3 large trees in backyard</span>
                     <span className="text-sm font-medium text-primary">$800</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" className="h-4 w-4 text-primary rounded border-gray-300" />
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4 text-primary rounded border-gray-300" 
+                      checked={checkedTasks['garden-pathway']}
+                      onChange={() => handleCheckboxChange('garden-pathway')}
+                    />
                     <span className="text-sm text-gray-700 flex-1">Create stone pathway in garden</span>
                     <span className="text-sm font-medium text-primary">$1,200</span>
                   </div>
@@ -118,17 +151,32 @@ const ContractorMockup = () => {
                 {/* Tasks List */}
                 <div className="mt-3 space-y-2 pl-2">
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" className="h-4 w-4 text-primary rounded border-gray-300" checked />
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4 text-primary rounded border-gray-300" 
+                      checked={checkedTasks['maintenance-heater']}
+                      onChange={() => handleCheckboxChange('maintenance-heater')}
+                    />
                     <span className="text-sm text-gray-700 flex-1">Replace tank water heater with tankless</span>
                     <span className="text-sm font-medium text-primary">$3,200</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" className="h-4 w-4 text-primary rounded border-gray-300" checked />
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4 text-primary rounded border-gray-300" 
+                      checked={checkedTasks['maintenance-lights']}
+                      onChange={() => handleCheckboxChange('maintenance-lights')}
+                    />
                     <span className="text-sm text-gray-700 flex-1">Add recess lights in all bedrooms</span>
                     <span className="text-sm font-medium text-primary">$1,800</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <input type="checkbox" className="h-4 w-4 text-primary rounded border-gray-300" checked />
+                    <input 
+                      type="checkbox" 
+                      className="h-4 w-4 text-primary rounded border-gray-300" 
+                      checked={checkedTasks['maintenance-paint']}
+                      onChange={() => handleCheckboxChange('maintenance-paint')}
+                    />
                     <span className="text-sm text-gray-700 flex-1">Paint kids room</span>
                     <span className="text-sm font-medium text-primary">$950</span>
                   </div>
